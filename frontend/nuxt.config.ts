@@ -9,7 +9,10 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/image",
     "@nuxt/scripts",
-    "@nuxt/test-utils",
+    "@primevue/nuxt-module",
+    "@nuxtjs/tailwindcss",
   ],
-  plugins: ["~/plugins/primevue"],
+  primevue: {
+    importTheme: { from: "@/themes/mytheme.js" },
+  },
 })

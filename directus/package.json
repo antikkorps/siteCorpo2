@@ -1,0 +1,24 @@
+{
+  "name": "directus",
+  "version": "1.0.0",
+  "description": "Directus CMS avec SQLite",
+  "main": "index.js",
+  "scripts": {
+    "dev": "directus start",
+    "start": "directus start",
+    "build": "directus build",
+    "bootstrap": "directus bootstrap",
+    "init": "directus init"
+  },
+  "keywords": [
+    "cms",
+    "directus",
+    "sqlite"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "directus": "^11.9.2"
+  }
+}
