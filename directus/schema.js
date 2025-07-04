@@ -63,6 +63,23 @@ export default {
           },
         },
         {
+          field: "illustration",
+          type: "uuid",
+          meta: {
+            interface: "file",
+            special: ["file"],
+            translations: [
+              {
+                language: "fr-FR",
+                translation: "Illustration",
+              },
+            ],
+          },
+          schema: {
+            is_nullable: true,
+          },
+        },
+        {
           field: "content",
           type: "text",
           meta: {

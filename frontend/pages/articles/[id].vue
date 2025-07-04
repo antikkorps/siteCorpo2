@@ -31,54 +31,66 @@
         </nav>
 
         <!-- Article Header -->
-        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <div class="flex items-center gap-4 mb-6">
-            <Tag
-              :value="article.status === 'published' ? 'Publié' : 'Brouillon'"
-              :severity="article.status === 'published' ? 'success' : 'warning'"
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+          <!-- Illustration -->
+          <div v-if="article.illustration" class="w-full h-64 md:h-96 relative">
+            <img
+              :src="getImageUrl(article.illustration)"
+              :alt="article.title"
+              class="w-full h-full object-cover"
             />
-            <Tag
-              v-if="article.category"
-              :value="getCategoryLabel(article.category)"
-              severity="info"
-            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
 
-          <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">
-            {{ article.title }}
-          </h1>
-
-          <div
-            v-if="article.excerpt"
-            class="text-xl text-slate-600 mb-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded"
-          >
-            {{ article.excerpt }}
-          </div>
-
-          <div
-            class="flex items-center justify-between text-sm text-slate-500 border-t border-slate-200 pt-6"
-          >
-            <div class="flex items-center space-x-4">
-              <span>
-                <i class="pi pi-calendar mr-1" />
-                Créé le {{ formatDate(article.date_created) }}
-              </span>
-              <span
-                v-if="
-                  article.date_updated && article.date_updated !== article.date_created
-                "
-              >
-                <i class="pi pi-clock mr-1" />
-                Modifié le {{ formatDate(article.date_updated) }}
-              </span>
+          <div class="p-8">
+            <div class="flex items-center gap-4 mb-6">
+              <Tag
+                :value="article.status === 'published' ? 'Publié' : 'Brouillon'"
+                :severity="article.status === 'published' ? 'success' : 'warning'"
+              />
+              <Tag
+                v-if="article.category"
+                :value="getCategoryLabel(article.category)"
+                severity="info"
+              />
             </div>
-            <Button
-              label="Modifier"
-              icon="pi pi-pencil"
-              severity="secondary"
-              size="small"
-              @click="editArticle"
-            />
+
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">
+              {{ article.title }}
+            </h1>
+
+            <div
+              v-if="article.excerpt"
+              class="text-xl text-slate-600 mb-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded"
+            >
+              {{ article.excerpt }}
+            </div>
+
+            <div
+              class="flex items-center justify-between text-sm text-slate-500 border-t border-slate-200 pt-6"
+            >
+              <div class="flex items-center space-x-4">
+                <span>
+                  <i class="pi pi-calendar mr-1" />
+                  Créé le {{ formatDate(article.date_created) }}
+                </span>
+                <span
+                  v-if="
+                    article.date_updated && article.date_updated !== article.date_created
+                  "
+                >
+                  <i class="pi pi-clock mr-1" />
+                  Modifié le {{ formatDate(article.date_updated) }}
+                </span>
+              </div>
+              <Button
+                label="Modifier"
+                icon="pi pi-pencil"
+                severity="secondary"
+                size="small"
+                @click="editArticle"
+              />
+            </div>
           </div>
         </div>
 
@@ -180,11 +192,13 @@ const editArticle = () => {
   }
 }
 
+// Composables
+const { getArticles, getImageUrl } = useDirectus()
+
 // Charger l'article
 const loadArticle = async () => {
   try {
     loading.value = true
-    const { getArticles } = useDirectus()
     const { canViewArticle, checkAuth } = useAuth()
 
     // Initialiser l'authentification

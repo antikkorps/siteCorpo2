@@ -15,4 +15,28 @@ export default defineNuxtConfig({
   primevue: {
     importTheme: { from: "@/themes/mytheme.js" },
   },
+
+  runtimeConfig: {
+    public: {
+      directusUrl: process.env.NUXT_PUBLIC_DIRECTUS_URL || "http://localhost:8055",
+    },
+  },
+
+  image: {
+    domains: ["localhost", "localhost:8055"],
+    format: ["webp", "avif", "jpeg", "jpg", "png"],
+    quality: 80,
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+    },
+    provider: "ipx",
+    ipx: {
+      domains: ["localhost:8055"],
+    },
+  },
 })

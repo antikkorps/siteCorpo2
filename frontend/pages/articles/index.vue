@@ -71,6 +71,18 @@
             <template #header>
               <div class="relative">
                 <div
+                  v-if="article.illustration"
+                  class="w-full h-48 rounded-t-lg overflow-hidden"
+                >
+                  <img
+                    :src="getImageUrl(article.illustration)"
+                    :alt="article.title"
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div
+                  v-else
                   class="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-t-lg flex items-center justify-center"
                 >
                   <i class="pi pi-file-edit text-4xl text-blue-600" />
@@ -198,7 +210,7 @@
 
 <script setup>
 // Composables
-const { getArticles } = useDirectus()
+const { getArticles, getImageUrl } = useDirectus()
 const { canEditArticle } = useAuth()
 
 // Variables réactives
@@ -312,7 +324,6 @@ const loadArticles = async () => {
   try {
     loading.value = true
     const data = await getArticles()
-    console.log("Articles chargés:", data)
     articles.value = data
   } catch (error) {
     console.error("Erreur lors du chargement des articles:", error)

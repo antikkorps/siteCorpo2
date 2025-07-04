@@ -1,10 +1,11 @@
 export const useDirectus = () => {
-  const baseURL = "http://localhost:8055"
+  const config = useRuntimeConfig()
+  const baseURL = config.public.directusUrl || "http://localhost:8055"
 
   // Fonction pour récupérer les articles
   const getArticles = async () => {
     try {
-      const response = await $fetch(`${baseURL}/items/articles`)
+      const response = await $fetch(`${baseURL}/items/articles?fields=*,illustration.*`)
       return response.data || []
     } catch (error) {
       console.error("Erreur lors de la récupération des articles:", error)
@@ -76,6 +77,12 @@ export const useDirectus = () => {
     }
   }
 
+  // Fonction pour obtenir l'URL d'une image pour NuxtImage
+  const getImageUrl = (imageId) => {
+    if (!imageId) return null
+    return `${baseURL}/assets/${imageId}`
+  }
+
   return {
     getArticles,
     getPages,
@@ -83,5 +90,6 @@ export const useDirectus = () => {
     createArticle,
     createPage,
     createUser,
+    getImageUrl,
   }
 }
