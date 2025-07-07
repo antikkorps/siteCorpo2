@@ -10,7 +10,7 @@
             <div
               class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center"
             >
-              <i class="pi pi-code text-white text-lg" />
+              <AppIcon name="pi-code" size="lg" class="text-white" />
             </div>
             <h1
               class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
@@ -25,21 +25,22 @@
             <NuxtLink to="/articles" class="text-blue-600 font-semibold"
               >Articles</NuxtLink
             >
-            <Button
-              label="Admin"
-              icon="pi pi-cog"
-              severity="secondary"
-              size="small"
-              @click="goToAdmin"
-            />
+            <Button label="Admin" severity="secondary" size="small" @click="goToAdmin">
+              <template #icon>
+                <AppIcon name="pi-cog" size="sm" />
+              </template>
+            </Button>
           </nav>
           <Button
-            icon="pi pi-bars"
             severity="secondary"
             text
             class="md:hidden"
             @click="showMobileMenu = !showMobileMenu"
-          />
+          >
+            <template #icon>
+              <AppIcon name="pi-bars" size="lg" />
+            </template>
+          </Button>
         </div>
       </div>
     </header>
@@ -57,11 +58,14 @@
         >
         <Button
           label="Admin Directus"
-          icon="pi pi-cog"
           severity="secondary"
           size="small"
           @click="goToAdmin"
-        />
+        >
+          <template #icon>
+            <AppIcon name="pi-cog" size="sm" />
+          </template>
+        </Button>
       </div>
     </div>
 
@@ -74,13 +78,16 @@
     <div v-if="$route.path === '/'" class="fixed bottom-6 right-6 z-50">
       <Button
         v-tooltip.top="'Accéder à l\'admin Directus'"
-        icon="pi pi-cog"
         severity="secondary"
         size="large"
         rounded
         class="shadow-lg hover:shadow-xl transition-all duration-300"
         @click="goToAdmin"
-      />
+      >
+        <template #icon>
+          <AppIcon name="pi-cog" size="xl" />
+        </template>
+      </Button>
     </div>
   </div>
 </template>

@@ -20,19 +20,25 @@
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               label="Voir les articles"
-              icon="pi pi-file-edit"
               size="large"
               class="text-lg px-8 py-3"
               @click="goToArticles"
-            />
+            >
+              <template #icon>
+                <AppIcon name="heroicons:document-text" size="lg" />
+              </template>
+            </Button>
             <Button
               label="Accéder au CMS"
-              icon="pi pi-cog"
               severity="secondary"
               size="large"
               class="text-lg px-8 py-3"
               @click="goToAdmin"
-            />
+            >
+              <template #icon>
+                <AppIcon name="heroicons:cog-6-tooth" size="lg" />
+              </template>
+            </Button>
           </div>
         </div>
       </div>
@@ -58,7 +64,7 @@
               <div
                 class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4"
               >
-                <i class="pi pi-bolt text-white text-2xl" />
+                <AppIcon name="heroicons:bolt" size="2xl" class="text-white" />
               </div>
             </template>
             <template #content>
@@ -77,7 +83,7 @@
               <div
                 class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4"
               >
-                <i class="pi pi-palette text-white text-2xl" />
+                <AppIcon name="heroicons:paint-brush" size="2xl" class="text-white" />
               </div>
             </template>
             <template #content>
@@ -96,7 +102,7 @@
               <div
                 class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4"
               >
-                <i class="pi pi-code text-white text-2xl" />
+                <AppIcon name="heroicons:code-bracket" size="2xl" class="text-white" />
               </div>
             </template>
             <template #content>
@@ -175,7 +181,11 @@
                   v-else
                   class="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-t-lg flex items-center justify-center"
                 >
-                  <i class="pi pi-file-edit text-4xl text-blue-600" />
+                  <AppIcon
+                    name="heroicons:document-text"
+                    size="4xl"
+                    class="text-blue-600"
+                  />
                 </div>
                 <Tag
                   :value="article.status === 'published' ? 'Publié' : 'Brouillon'"
@@ -203,38 +213,48 @@
             <template #footer>
               <Button
                 label="Lire l'article"
-                icon="pi pi-eye"
                 text
                 class="w-full"
                 @click="viewArticle(article)"
-              />
+              >
+                <template #icon>
+                  <AppIcon name="heroicons:eye" size="sm" />
+                </template>
+              </Button>
             </template>
           </Card>
         </div>
 
         <div v-else class="text-center py-12">
-          <i class="pi pi-file-edit text-6xl text-slate-300 mb-4" />
+          <AppIcon
+            name="heroicons:document-text"
+            size="6xl"
+            class="text-slate-300 mb-4"
+          />
           <h3 class="text-xl font-semibold text-slate-600 mb-2">
             Aucun article pour le moment
           </h3>
           <p class="text-slate-500 mb-4">
             Créez votre premier article depuis l'interface d'administration Directus.
           </p>
-          <Button
-            label="Accéder à l'admin"
-            icon="pi pi-external-link"
-            @click="goToAdmin"
-          />
+          <Button label="Accéder à l'admin" @click="goToAdmin">
+            <template #icon>
+              <AppIcon name="heroicons:arrow-top-right-on-square" size="sm" />
+            </template>
+          </Button>
         </div>
 
         <div v-if="recentArticles.length > 0" class="text-center mt-12">
           <Button
             label="Voir tous les articles"
-            icon="pi pi-arrow-right"
             severity="secondary"
             class="text-lg px-8 py-3"
             @click="goToArticles"
-          />
+          >
+            <template #icon>
+              <AppIcon name="heroicons:arrow-right" size="lg" />
+            </template>
+          </Button>
         </div>
       </div>
     </section>
@@ -248,7 +268,7 @@
               <div
                 class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center"
               >
-                <i class="pi pi-code text-white" />
+                <AppIcon name="heroicons:code-bracket" size="sm" class="text-white" />
               </div>
               <h3 class="text-xl font-bold">MyTests</h3>
             </div>
@@ -284,11 +304,14 @@
             <h4 class="font-semibold mb-4">Admin</h4>
             <Button
               label="Accéder à Directus"
-              icon="pi pi-external-link"
               severity="secondary"
               size="small"
               @click="goToAdmin"
-            />
+            >
+              <template #icon>
+                <AppIcon name="heroicons:arrow-top-right-on-square" size="sm" />
+              </template>
+            </Button>
           </div>
         </div>
         <div class="border-t border-slate-700 mt-8 pt-8 text-center text-slate-400">

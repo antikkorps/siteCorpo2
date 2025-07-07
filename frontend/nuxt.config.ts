@@ -12,6 +12,15 @@ export default defineNuxtConfig({
     "@primevue/nuxt-module",
     "@nuxtjs/tailwindcss",
   ],
+
+  icon: {
+    size: "24px", // default <Icon> size applied
+    class: "icon", // default <Icon> class applied
+    aliases: {
+      nuxt: "logos:nuxt-icon",
+    },
+  },
+
   primevue: {
     importTheme: { from: "@/themes/mytheme.js" },
   },
