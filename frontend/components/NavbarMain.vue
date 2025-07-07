@@ -173,6 +173,26 @@
       </div>
     </Transition>
   </header>
+
+  <!-- Loading Overlay -->
+  <Transition
+    enter-active-class="transition-opacity duration-300 ease-out"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="transition-opacity duration-300 ease-in"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
+  >
+    <div
+      v-if="loading"
+      class="fixed inset-0 bg-white z-[99999] flex items-center justify-center"
+    >
+      <div class="text-center">
+        <CustomSpinner />
+        <p class="mt-4 text-slate-600 font-medium">Chargement...</p>
+      </div>
+    </div>
+  </Transition>
 </template>
 
 <script setup>
@@ -182,6 +202,7 @@ const { getSettings, getImageUrl } = useDirectus()
 // Variables réactives
 const showMobileMenu = ref(false)
 const config = ref(null)
+const loading = ref(true)
 
 // Gestion du scroll quand le menu mobile est ouvert
 watch(showMobileMenu, (isOpen) => {
@@ -211,14 +232,9 @@ const goToAdmin = () => {
 // Charger la configuration du site
 const loadConfig = async () => {
   try {
+    loading.value = true
     config.value = await getSettings()
     console.log("✅ Configuration chargée:", config.value)
-    console.log("🔍 Logo:", config.value?.logo)
-    console.log("🔍 Type du logo:", typeof config.value?.logo)
-    if (config.value?.logo) {
-      console.log("🔍 Logo ID:", config.value.logo.id)
-      console.log("🔍 Logo URL:", getImageUrl(config.value.logo.id || config.value.logo))
-    }
   } catch (error) {
     console.warn("⚠️ Erreur lors du chargement de la configuration:", error)
     // Fallback pour éviter que le composant ne s'affiche pas
@@ -226,6 +242,8 @@ const loadConfig = async () => {
       site_title: "Mon Institution",
       logo: null,
     }
+  } finally {
+    loading.value = false
   }
 }
 
