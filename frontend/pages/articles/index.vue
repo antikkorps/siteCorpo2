@@ -75,7 +75,7 @@
                   class="w-full h-48 rounded-t-lg overflow-hidden"
                 >
                   <img
-                    :src="getImageUrl(article.illustration)"
+                    :src="getImageUrl(article.illustration.id || article.illustration)"
                     :alt="article.title"
                     class="w-full h-full object-cover"
                     loading="lazy"

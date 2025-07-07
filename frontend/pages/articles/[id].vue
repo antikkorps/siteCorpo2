@@ -35,7 +35,7 @@
           <!-- Illustration -->
           <div v-if="article.illustration" class="w-full h-64 md:h-96 relative">
             <img
-              :src="getImageUrl(article.illustration)"
+              :src="getImageUrl(article.illustration.id || article.illustration)"
               :alt="article.title"
               class="w-full h-full object-cover"
             />

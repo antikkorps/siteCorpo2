@@ -44,8 +44,5 @@ export default defineNuxtConfig({
       xxl: 1536,
     },
     provider: "ipx",
-    ipx: {
-      domains: ["localhost:8055"],
-    },
   },
 })

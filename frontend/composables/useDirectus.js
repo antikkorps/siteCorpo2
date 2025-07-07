@@ -204,15 +204,19 @@ export const useDirectus = () => {
     }
   }
 
-  // Récupérer les paramètres du site (logo, réseaux sociaux, etc.)
+  // Récupérer la configuration du site (logo, titre, etc.)
   const getSettings = async () => {
     try {
-      const response = await $fetch(
-        `${baseURL}/items/settings?fields=*,logo.*,favicon.*,socials.*`
+      console.log(
+        "🔍 Tentative de récupération de la configuration depuis:",
+        `${baseURL}/items/configuration_du_site`
       )
-      return response.data?.[0] || null
+      const response = await $fetch(`${baseURL}/items/configuration_du_site`)
+      console.log("🔍 Réponse Directus:", response)
+      return response.data || null
     } catch (error) {
-      console.error("Erreur lors de la récupération des paramètres du site:", error)
+      console.error("Erreur lors de la récupération de la configuration du site:", error)
+      console.error("🔍 Détails de l'erreur:", error.message)
       return null
     }
   }
