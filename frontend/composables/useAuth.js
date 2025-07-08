@@ -1,16 +1,36 @@
 export const useAuth = () => {
-  // État de l'authentification
-  const isAuthenticated = ref(false)
-  const user = ref(null)
-  const isAdmin = ref(false)
+  // État de l'authentification global (partagé entre tous les composants)
+  const isAuthenticated = useState("auth:isAuthenticated", () => false)
+  const user = useState("auth:user", () => null)
+  const isAdmin = useState("auth:isAdmin", () => false)
+  const isInitialized = useState("auth:isInitialized", () => false)
 
-  // Vérifier si l'utilisateur est connecté (simulation pour l'instant)
+  // Vérifier si l'utilisateur est connecté
   const checkAuth = () => {
-    // Pour l'instant, on simule un admin connecté
-    // En production, on vérifierait les cookies/session
-    isAuthenticated.value = true
-    user.value = { id: 1, email: "admin@example.com", role: "admin" }
-    isAdmin.value = true
+    // Vérifier si on est en mode développement
+    if (import.meta.dev) {
+      // En développement, on simule un admin connecté
+      // Vous pouvez changer cette valeur pour tester différents états
+      const devMode = true // Mettre à false pour simuler un utilisateur non connecté
+
+      if (devMode) {
+        isAuthenticated.value = true
+        user.value = { id: 1, email: "admin@example.com", role: "admin" }
+        isAdmin.value = true
+        console.log("🔐 Mode développement : Admin connecté")
+      } else {
+        isAuthenticated.value = false
+        user.value = null
+        isAdmin.value = false
+        console.log("🔐 Mode développement : Utilisateur non connecté")
+      }
+    } else {
+      // En production, on vérifierait les cookies/session
+      // TODO: Implémenter la vraie vérification d'authentification
+      console.log("🔐 Mode production : Vérification d'authentification")
+    }
+
+    isInitialized.value = true
   }
 
   // Vérifier les permissions pour un article
@@ -40,12 +60,34 @@ export const useAuth = () => {
     return isAdmin.value
   }
 
+  // Fonctions pour le développement
+  const login = () => {
+    if (import.meta.dev) {
+      isAuthenticated.value = true
+      user.value = { id: 1, email: "admin@example.com", role: "admin" }
+      isAdmin.value = true
+      console.log("🔐 Connexion simulée")
+    }
+  }
+
+  const logout = () => {
+    if (import.meta.dev) {
+      isAuthenticated.value = false
+      user.value = null
+      isAdmin.value = false
+      console.log("🔐 Déconnexion simulée")
+    }
+  }
+
   return {
-    isAuthenticated: computed(() => isAuthenticated.value),
-    user: computed(() => user.value),
-    isAdmin: computed(() => isAdmin.value),
+    isAuthenticated,
+    user,
+    isAdmin,
+    isInitialized,
     checkAuth,
     canViewArticle,
     canEditArticle,
+    login,
+    logout,
   }
 }

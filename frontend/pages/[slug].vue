@@ -7,6 +7,16 @@
 
     <!-- Page content -->
     <div v-else-if="page">
+      <!-- Hero section -->
+      <section class="py-20 px-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="container mx-auto text-center">
+          <h1 class="text-4xl md:text-6xl font-bold mb-6">{{ page.title }}</h1>
+          <p v-if="page.meta_description" class="text-xl text-blue-100 max-w-2xl mx-auto">
+            {{ page.meta_description }}
+          </p>
+        </div>
+      </section>
+
       <!-- Page sections -->
       <PageSections
         v-if="page.sections && page.sections.length > 0"
@@ -20,7 +30,7 @@
       />
 
       <!-- Fallback content -->
-      <section v-else-if="page.content" class="py-16 px-6">
+      <section v-else class="py-16 px-6">
         <div class="container mx-auto max-w-4xl">
           <div class="prose prose-lg max-w-none" v-html="page.content" />
         </div>
@@ -42,17 +52,21 @@
 // Composables
 const { getPageBySlugWithSections } = useDirectus()
 
+// Route
+const route = useRoute()
+const slug = route.params.slug
+
 // Variables réactives
 const loading = ref(true)
 const page = ref(null)
 
-// Charger la page d'accueil
-const loadHomePage = async () => {
+// Charger la page
+const loadPage = async () => {
   try {
     loading.value = true
-    page.value = await getPageBySlugWithSections("home")
+    page.value = await getPageBySlugWithSections(slug)
   } catch (error) {
-    console.error("Erreur lors du chargement de la page d'accueil:", error)
+    console.error("Erreur lors du chargement de la page:", error)
   } finally {
     loading.value = false
   }
@@ -60,33 +74,17 @@ const loadHomePage = async () => {
 
 // Charger au montage
 onMounted(() => {
-  loadHomePage()
+  loadPage()
 })
 
 // Meta tags
 useHead(() => ({
-  title: page.value?.title || "Accueil",
+  title: page.value?.title || "Page",
   meta: [
     {
       name: "description",
-      content: page.value?.meta_description || "Page d'accueil de MyTests",
+      content: page.value?.meta_description || "",
     },
   ],
 }))
 </script>
-
-<style scoped>
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-</style>

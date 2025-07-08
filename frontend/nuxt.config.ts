@@ -46,5 +46,5 @@ export default defineNuxtConfig({
     provider: "ipx",
   },
 
-  css: ["~/assets/css/spinner.css"],
+  css: ["~/assets/css/spinner.css", "~/assets/css/sections.css"],
 })

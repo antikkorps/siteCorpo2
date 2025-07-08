@@ -3,15 +3,15 @@
     class="bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50"
   >
     <div class="container mx-auto">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between py-3">
         <!-- Logo -->
         <div class="flex items-center">
           <NuxtLink to="/" class="flex items-center">
             <div v-if="config?.logo" class="flex items-center">
-              <NuxtImg
+              <img
                 :src="getImageUrl(config.logo)"
                 :alt="config.site_title || 'Logo'"
-                class="h-32 w-auto"
+                class="h-20 w-auto"
                 loading="eager"
               />
             </div>
@@ -42,7 +42,13 @@
           >
             Articles
           </NuxtLink>
-          <Button label="Admin" severity="secondary" size="small" @click="goToAdmin">
+          <Button
+            v-if="isInitialized && isAuthenticated"
+            label="Admin"
+            severity="secondary"
+            size="small"
+            @click="goToAdmin"
+          >
             <template #icon>
               <AppIcon name="heroicons:cog-6-tooth" size="sm" />
             </template>
@@ -107,7 +113,7 @@
           <div class="p-8 border-b border-slate-200">
             <div class="flex items-center space-x-3">
               <div v-if="config?.logo" class="flex items-center">
-                <NuxtImg
+                <img
                   :src="getImageUrl(config.logo)"
                   :alt="config.site_title || 'Logo'"
                   class="h-15 w-auto"
@@ -157,7 +163,10 @@
           </nav>
 
           <!-- Footer -->
-          <div class="p-6 border-t border-slate-200">
+          <div
+            v-if="isInitialized && isAuthenticated"
+            class="p-6 border-t border-slate-200"
+          >
             <Button
               label="Admin Directus"
               severity="secondary"
@@ -198,11 +207,17 @@
 <script setup>
 // Composables
 const { getSettings, getImageUrl } = useDirectus()
+const { isAuthenticated, isInitialized, checkAuth } = useAuth()
 
 // Variables réactives
 const showMobileMenu = ref(false)
 const config = ref(null)
 const loading = ref(true)
+
+// Initialiser l'authentification
+onMounted(() => {
+  checkAuth()
+})
 
 // Gestion du scroll quand le menu mobile est ouvert
 watch(showMobileMenu, (isOpen) => {

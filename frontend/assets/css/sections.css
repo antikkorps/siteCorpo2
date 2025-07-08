@@ -1,0 +1,116 @@
+/* Styles pour les sections personnalisées */
+
+/* Hero Section */
+.heroSection {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 6rem 1.5rem;
+  text-align: center;
+  height: 90vh;
+}
+
+.heroSection h2 {
+  color: white;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.heroSection .prose {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.heroSection .prose p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.25rem;
+  line-height: 1.8;
+}
+
+/* Section avec fond sombre */
+.darkSection {
+  background-color: #1f2937;
+  color: white;
+}
+
+.darkSection h2 {
+  color: white;
+}
+
+.darkSection .prose {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Section avec fond coloré */
+.primarySection {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.primarySection h2 {
+  color: white;
+}
+
+.primarySection .prose {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Section avec bordure */
+.borderedSection {
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+
+/* Section avec ombre */
+.shadowSection {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+}
+
+/* Section avec espacement réduit */
+.compactSection {
+  padding: 2rem 1.5rem;
+}
+
+/* Section avec espacement étendu */
+.spaciousSection {
+  padding: 8rem 1.5rem;
+}
+
+/* Section normale */
+.normalSection {
+  background-color: #ffffff;
+  color: #374151;
+  padding: 4rem 1.5rem;
+}
+
+.normalSection h2 {
+  color: #1f2937;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.normalSection .prose {
+  color: #4b5563;
+}
+
+.normalSection .prose p {
+  color: #4b5563;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 4rem 1rem;
+  }
+
+  .heroSection h2 {
+    font-size: 2rem;
+  }
+
+  .spaciousSection {
+    padding: 4rem 1rem;
+  }
+}

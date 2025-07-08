@@ -8,8 +8,8 @@
       <slot />
     </main>
 
-    <!-- Floating Admin Button (only on home page) -->
-    <div v-if="$route.path === '/'" class="fixed bottom-6 right-6 z-50">
+    <!-- Floating Admin Button (only for authenticated users) -->
+    <div v-if="isInitialized && isAuthenticated" class="fixed bottom-6 right-6 z-50">
       <Button
         v-tooltip.top="'Accéder à l\'admin Directus'"
         severity="secondary"
@@ -27,6 +27,14 @@
 </template>
 
 <script setup>
+// Composables
+const { isAuthenticated, isInitialized, checkAuth } = useAuth()
+
+// Vérifier l'authentification au montage
+onMounted(() => {
+  checkAuth()
+})
+
 // Fonctions
 const goToAdmin = () => {
   window.open("http://localhost:8055/admin", "_blank")

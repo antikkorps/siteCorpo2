@@ -2,6 +2,11 @@ export const useDirectus = () => {
   const config = useRuntimeConfig()
   const baseURL = config.public.directusUrl || "http://localhost:8055"
 
+  // Headers pour l'authentification (optionnel)
+  const headers = {
+    "Content-Type": "application/json",
+  }
+
   // Fonction pour récupérer les articles
   const getArticles = async () => {
     try {
@@ -40,19 +45,31 @@ export const useDirectus = () => {
   // Récupérer une page par son slug
   const getPageBySlugWithSections = async (slug) => {
     try {
-      // Récupérer la page par slug
+      console.log(`🔍 Recherche de la page avec le slug: ${slug}`)
+
+      // Récupérer la page par slug (sans filtres stricts pour le debug)
       const page = await $fetch(
-        `${baseURL}/items/pages?filter[slug][_eq]=${slug}&filter[status][_eq]=published&filter[is_published][_eq]=true&fields=*,illustration.*`
+        `${baseURL}/items/Pages?filter[slug][_eq]=${slug}&fields=*,illustration.*`,
+        { headers }
       )
 
-      if (!page.data?.[0]) return null
+      console.log("📄 Réponse de la page:", page)
+
+      if (!page.data?.[0]) {
+        console.warn(`⚠️ Aucune page trouvée avec le slug: ${slug}`)
+        return null
+      }
 
       const pageData = page.data[0]
+      console.log("📄 Données de la page:", pageData)
 
       // Récupérer les sections de cette page (Many-to-One)
       const sections = await $fetch(
-        `${baseURL}/items/page_sections?filter[page][_eq]=${pageData.id}&filter[status][_eq]=published&sort=order&fields=*,image.*,images.*`
+        `${baseURL}/items/page_sections?filter[page][_eq]=${pageData.id}&sort=order&fields=*,image.*,images.*`,
+        { headers }
       )
+
+      console.log("📋 Sections trouvées:", sections)
 
       return {
         ...pageData,
